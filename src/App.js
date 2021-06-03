@@ -151,11 +151,12 @@ function App() {
   let [weightsA, setWeightsA] = useState(null);
   let [criteria, setCriteria] = useState(null);
   let [itemResults, setItemResults] = useState(null);
+  let [resultItem, setResultItem] = useState("");
 
   // Масив підписів критеріїв 
   const criterionLables = ["Ціна", "Операціна система", "Якість дисплею"];
   // Масив підписів альтернатив
-  const itemLabels = ["Телефон 1", "Телефон 2", "Телефон 3"];
+  const itemLabels = ["iPhone SE", "Samsumg Galaxy SS", "Huawei P40"];
 
   // Функція, що запускає вирахування результатів
   function startCalculating() {
@@ -229,11 +230,18 @@ function App() {
 
     // Створюємо шаблон масиву альтернатив і їх ваг
     const tItemsResults = [];
+    // Індекс максимального елементу
+    let maxItemIndex = 0;
+    let maxItem = -1;
     for(let i = 0; i < 3; ++i) {
       let itemResult = 0;
       for(let j = 0; j < 3; ++j) {
         // Фактично множимо вектор ваг критеріїв на матрицю ваг альтернатив 
         itemResult += tWeights[j] * tCriteria[j].weights[i];
+      }
+      if(itemResult > maxItem) {
+        maxItem = itemResult;
+        setResultItem(itemLabels[i])
       }
       tItemsResults.push(itemResult);
     }
@@ -260,9 +268,9 @@ function App() {
     <div className="logical-block">
       <h3>Уведіть відносну оцінку телефонів відносну один одного за критерієм "ціна"</h3>
       <div>
-        <QualityCriterion leftLabel={"Телефон 1"} rightLabel={"Телефон 2"} selectId={"k1_01"} />
-        <QualityCriterion leftLabel={"Телефон 1"} rightLabel={"Телефон 3"} selectId={"k1_02"} />
-        <QualityCriterion leftLabel={"Телефон 2"} rightLabel={"Телефон 3"} selectId={"k1_12"} />
+        <QualityCriterion leftLabel={"iPhone SE"} rightLabel={"Samsumg Galaxy SS"} selectId={"k1_01"} />
+        <QualityCriterion leftLabel={"iPhone SE"} rightLabel={"Huawei P40"} selectId={"k1_02"} />
+        <QualityCriterion leftLabel={"Samsumg Galaxy SS"} rightLabel={"Huawei P40"} selectId={"k1_12"} />
       </div>
     </div>
 
@@ -270,9 +278,9 @@ function App() {
     <div className="logical-block">
       <h3>Уведіть відносну оцінку телефонів відносну один одного за критерієм "операціна система"</h3>
       <div>
-        <QualityCriterion leftLabel={"Телефон 1"} rightLabel={"Телефон 2"} selectId={"k2_01"} />
-        <QualityCriterion leftLabel={"Телефон 1"} rightLabel={"Телефон 3"} selectId={"k2_02"} />
-        <QualityCriterion leftLabel={"Телефон 2"} rightLabel={"Телефон 3"} selectId={"k2_12"} />
+        <QualityCriterion leftLabel={"iPhone SE"} rightLabel={"Samsumg Galaxy SS"} selectId={"k2_01"} />
+        <QualityCriterion leftLabel={"iPhone SE"} rightLabel={"Huawei P40"} selectId={"k2_02"} />
+        <QualityCriterion leftLabel={"Samsumg Galaxy SS"} rightLabel={"Huawei P40"} selectId={"k2_12"} />
       </div>
     </div>
 
@@ -280,9 +288,9 @@ function App() {
     <div className="logical-block">
       <h3>Уведіть відносну оцінку телефонів відносну один одного за критерієм "якість дисплею"</h3>
       <div>
-        <QualityCriterion leftLabel={"Телефон 1"} rightLabel={"Телефон 2"} selectId={"k3_01"} />
-        <QualityCriterion leftLabel={"Телефон 1"} rightLabel={"Телефон 3"} selectId={"k3_02"} />
-        <QualityCriterion leftLabel={"Телефон 2"} rightLabel={"Телефон 3"} selectId={"k3_12"} />
+        <QualityCriterion leftLabel={"iPhone SE"} rightLabel={"Samsumg Galaxy SS"} selectId={"k3_01"} />
+        <QualityCriterion leftLabel={"iPhone SE"} rightLabel={"Huawei P40"} selectId={"k3_02"} />
+        <QualityCriterion leftLabel={"Samsumg Galaxy SS"} rightLabel={"Huawei P40"} selectId={"k3_12"} />
       </div>
     </div>
 
@@ -361,7 +369,7 @@ function App() {
         )}
       </table>
     }
-    <h4>Альтернатва із найбільшою відносною вагою і є найкращим вибором для заданих критеріїв</h4>
+    <h4>Отже, найкращим варіантом для покупки є {resultItem}</h4>
    </>
   );
 }
