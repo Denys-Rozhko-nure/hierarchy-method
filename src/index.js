@@ -1,17 +1,17 @@
+// Імпортуємо бібліотеку React задля корректної роботи рендерингу
 import React from 'react';
 import ReactDOM from 'react-dom';
+// Підключення стилів. Це робиться у файлі джаваскрипт, бо збірник React 
+// (на базі WebPack) усе одно переносить їх у HTML самостійно
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
+// Імпортуємо наш компонент
+import App from './App';
+
+// Вбудовуємо наш компонент у HTML-елемент з id="root"
 ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
